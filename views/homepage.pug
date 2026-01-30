@@ -17,8 +17,15 @@ html
           thead
             tr
               th Name
-              th Bio
-              th Level
+              th Price
+              th Description
           tbody
-            tr
-              td(colspan="3") No data available
+            if records && records.length > 0
+              each record in records
+                tr
+                  td= record.properties.name || 'N/A'
+                  td= record.properties.price || 'N/A'
+                  td= record.properties.description || 'N/A'
+            else
+              tr
+                td(colspan="3") No data available
