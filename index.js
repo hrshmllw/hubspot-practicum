@@ -57,6 +57,38 @@ app.get("/update-cobj", (req, res) => {
 	});
 });
 
+// POST /update-cobj route
+app.post("/update-cobj", async (req, res) => {
+	try {
+		const { name, price, description } = req.body;
+
+		await axios.post(
+			`https://api.hubapi.com/crm/v3/objects/${CUSTOM_OBJECT_NAME}`,
+			{
+				properties: {
+					name: name,
+					price: price,
+					description: description,
+				},
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
+					"Content-Type": "application/json",
+				},
+			},
+		);
+
+		res.redirect("/");
+	} catch (error) {
+		console.error("Error creating custom object:", error.message);
+		res.status(500).render("updates", {
+			title: "Update Custom Object Form | Integrating With HubSpot I Practicum",
+			error: "Failed to create custom object in HubSpot",
+		});
+	}
+});
+
 // 404 handler
 app.use((req, res, next) => {
 	res.status(404).send("404 - Page Not Found");
