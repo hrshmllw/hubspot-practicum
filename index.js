@@ -21,6 +21,13 @@ app.get("/", (req, res) => {
 	res.send("Server running");
 });
 
+// GET /update-cobj route
+app.get("/update-cobj", (req, res) => {
+	res.render("updates", {
+		title: "Update Custom Object Form | Integrating With HubSpot I Practicum",
+	});
+});
+
 // 404 handler
 app.use((req, res, next) => {
 	res.status(404).send("404 - Page Not Found");
